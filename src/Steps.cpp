@@ -26,5 +26,14 @@
 
 int get_steps(int s)
 {
-	return 0;
+	//as i tend to solve for every increment in step .. it is the same as fibonacci series ...
+	//but here the series starts with 1,2,3,5,8,13..... so get_steps(n) means fib(n+1)
+	if (s <= 0)
+		return 0;
+	if (s == 2)
+		return 2;
+	if (s == 1)
+		return 1;
+	
+	return get_steps(s - 1) + get_steps(s - 2);
 }
