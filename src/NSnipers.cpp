@@ -43,6 +43,53 @@ P.S: The Above Problem is just a modified version of a popular BackTracking prob
 */
 
 #include "stdafx.h"
-int solve_nsnipers(int *battlefield, int n){
+int check_safe(int * arr, int col, int row, int n)
+{
+	//check vertically
+	for (int i = row; i >= 0; i--)
+	{
+		if (arr[i*n + col])
+		{
+			return 0;
+		}
+	}
+	//checking for diagonal
+	for (int i = row, j = col; i >= 0 && j >= 0; i--, j--)
+	{
+		if (arr[i*n + j])
+		{
+			return 0;
+		}
+	}
+	//check the right top diagonal
+	for (int i = row, j = col; i >= 0 && j<n; i--, j++)
+	{
+		if (arr[i*n + j])
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+int nsnipers(int * arr, int row, int n)
+{
+	if (row >= n)
+		return 1;
+	for (int j = 0; j < n; j++)
+	{
+		if (check_safe(arr, j, row, n) == 1)
+		{
+			arr[row*n + j] = 1;
+			if (nsnipers(arr, row + 1, n))
+				return 1;
+			arr[row*n + j] = 0;
+		}
+	}
 	return 0;
+}
+int solve_nsnipers(int *battlefield, int n)
+{
+	if (battlefield == NULL)
+		return 0;
+	return nsnipers(battlefield, 0, n);
 }
