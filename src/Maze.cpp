@@ -64,11 +64,13 @@ int wrapper_func(int*arr, int m, int n, int i, int j, int tari, int tarj)
 
 int path_exists(int *maze, int rows, int columns, int x1, int y1, int x2, int y2)
 {
+	int temp;
 	if (maze == NULL)
 		return 0;
 	if (x1 >= rows || x1 < 0 || x2 >= rows || x2 < 0 || y1 >= columns || y1 < 0 || y2 >= columns || y2 < 0)
 		return 0;
-	maze[x1*rows + y1] = -1;
+	temp = maze[x1*columns + y1];
+	maze[x1*columns + y1] = -1;
 	int a, b, c, d;
 	a = b = c = d = 0;
 	if (x1 - 1 >= 0)
@@ -83,7 +85,7 @@ int path_exists(int *maze, int rows, int columns, int x1, int y1, int x2, int y2
 	if (y1 + 1 <columns)
 		if (maze[(x1)* columns + y1 + 1] == 1)
 			d = wrapper_func(maze, rows, columns, x1, y1 + 1, x2, y2);
-	maze[x1*rows + y1] = 1;
+	maze[x1*columns + y1] = temp;
 	if (a || b || c || d)
 		return 1;
 	else
